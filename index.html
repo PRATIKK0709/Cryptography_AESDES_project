@@ -10,18 +10,13 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             background: linear-gradient(to bottom right, #fff, #f0f0f0);
         }
 
         .container {
             width: 90%;
             max-width: 600px;
-            text-align: center;
-            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 auto;
             padding: 30px;
             border-radius: 16px;
             box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.15);
@@ -33,12 +28,12 @@
         }
 
         textarea {
-            width: calc(100% - 20px);
+            width: 100%;
             height: 150px;
             margin: 10px 0;
             padding: 10px;
             box-sizing: border-box;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             resize: none;
             font-size: 16px;
@@ -48,13 +43,14 @@
 
         .buttons {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             margin-top: 20px;
         }
 
         .buttons button {
-            margin: 0 10px;
-            padding: 10px 30px;
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px 0;
             border: none;
             background-color: rgba(0, 123, 255, 0.8);
             color: #fff;
@@ -74,19 +70,16 @@
         }
 
         .output-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-top: 20px;
         }
 
         .output-container textarea {
             width: 100%;
-            max-width: calc(100% - 20px);
+            height: 150px;
             margin: 10px 0;
             padding: 10px;
             box-sizing: border-box;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             resize: none;
             font-size: 16px;
@@ -95,8 +88,9 @@
         }
 
         .download-button {
+            width: 100%;
             margin-top: 20px;
-            padding: 10px 30px;
+            padding: 10px 0;
             border: none;
             background-color: rgba(255, 165, 0, 0.8);
             color: #fff;
@@ -133,14 +127,14 @@
         <div class="buttons">
             <button onclick="operate('encrypt')"><i class="fas fa-lock"></i> Encrypt</button>
             <button onclick="operate('decrypt')"><i class="fas fa-unlock"></i> Decrypt</button>
-            <button id="downloadButton" class="download-button" onclick="downloadFile()"><i class="fas fa-download"></i> Download Text</button>
         </div>
+        <button id="downloadButton" class="download-button" onclick="downloadFile()"><i class="fas fa-download"></i> Download Text</button>
         <div class="output-container">
             <div class="output-label">Output:</div>
             <textarea id="outputText" placeholder="Encrypted/Decrypted text will appear here..." readonly></textarea>
         </div>
         <div class="info">
-            <p>Hello, am Pratik Ray. This is my cryptography project for the <em>6th semester</em>.</p>
+            <p>This is a cryptography project for the <em>6th semester</em>.</p>
         </div>
     </div>
 
