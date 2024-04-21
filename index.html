@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Encryption and Decryption</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #fff, #f0f0f0);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.15);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        textarea {
+            width: calc(100% - 20px);
+            height: 150px;
+            margin: 10px 0;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            resize: none;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            margin: 0 10px;
+            padding: 10px 30px;
+            border: none;
+            background-color: rgba(0, 123, 255, 0.8);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .buttons button:hover {
+            background-color: rgba(0, 123, 255, 1);
+        }
+
+        .output-label {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .output-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .output-container textarea {
+            width: 100%;
+            max-width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            resize: none;
+            font-size: 16px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .download-button {
+            margin-top: 20px;
+            padding: 10px 30px;
+            border: none;
+            background-color: rgba(255, 165, 0, 0.8);
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+        }
+
+        .download-button:hover {
+            background-color: rgba(255, 165, 0, 1);
+        }
+
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        .info em {
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        .fas {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AES Encryption and Decryption</h1>
+        <textarea id="inputText" placeholder="Enter your text here..."></textarea>
+        <div class="buttons">
+            <button onclick="operate('encrypt')"><i class="fas fa-lock"></i> Encrypt</button>
+            <button onclick="operate('decrypt')"><i class="fas fa-unlock"></i> Decrypt</button>
+            <button id="downloadButton" class="download-button" onclick="downloadFile()"><i class="fas fa-download"></i> Download Text</button>
+        </div>
+        <div class="output-container">
+            <div class="output-label">Output:</div>
+            <textarea id="outputText" placeholder="Encrypted/Decrypted text will appear here..." readonly></textarea>
+        </div>
+        <div class="info">
+            <p>Hello, am Pratik Ray. This is my cryptography project for the <em>6th semester</em>.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        function operate(operation) {
+            var inputText = document.getElementById("inputText").value.trim();
+            if (inputText === "") {
+                alert("Please enter text to " + operation + ".");
+                return;
+            }
+            var key = "secret key"; // Change this to your secret key
+            var result;
+            if (operation === "encrypt") {
+                result = CryptoJS.AES.encrypt(inputText, key).toString();
+                document.getElementById("downloadButton").textContent = "Download Encrypted Text";
+            } else if (operation === "decrypt") {
+                try {
+                    result = CryptoJS.AES.decrypt(inputText, key).toString(CryptoJS.enc.Utf8);
+                    document.getElementById("downloadButton").textContent = "Download Decrypted Text";
+                } catch (error) {
+                    alert("Error decrypting the text. Please make sure the text is encrypted with AES using the correct key.");
+                    return;
+                }
+            }
+            document.getElementById("outputText").value = result;
+        }
+
+        function downloadFile() {
+            var textToSave = document.getElementById("outputText").value;
+            if (!textToSave) {
+                alert("No text to download.");
+                return;
+            }
+            var blob = new Blob([textToSave], { type: "text/plain" });
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement("a");
+            a.style.display = "none";
+            a.href = url;
+            a.download = "encrypted_decrypted_text.txt";
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
